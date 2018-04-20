@@ -143,13 +143,48 @@ function RtkHtb(configs) {
         /* ---------------------- PUT CODE HERE ------------------------------------ */
         var queryObj = {};
         var callbackId = System.generateUniqueId();
+        var auctionCode = false,
+            shortCodesAry  = [],
+            host = false,
+            categories = [];
+
+        returnParcels.forEach(function(rp) {
+          var params = rp.xSlotRef;
+          if (params.host) {
+            host = params.host;
+          }
+          if (params.categories) {
+            categories = categories.concat(params.categories);
+          }
+          if (!auctionCode) {
+            auctionCode = params.ai;
+          }
+          if (shortCodesAry.indexOf(params.sc) == -1) {
+            shortCodesAry.push(params.sc);
+            rp.id = params.sc;
+            queryObj[params.sc] = rp.id;
+          }
+        });
+
+        if (!host) {
+          host = 'thor.rtk.io';
+        }
 
         /* Change this to your bidder endpoint.*/
-        var baseUrl = Browser.getProtocol() + '//someAdapterEndpoint.com/bid';
+        var baseUrl = Browser.getProtocol() + '//' + host + '/' + auctionCode +
+                '/' + shortCodesAry.join('_') + '/aardvark';
 
         /* ---------------- Craft bid request using the above returnParcels --------- */
-
-
+        queryObj.jsonp = 'window.' + SpaceCamp.NAMESPACE + '.' + __profile.namespace +
+                '.adResponseCallbacks.' + callbackId;
+        queryObj.rtkreferer = Browser.getHostname();
+        if (categories.length) {
+          queryObj.categories = categories.filter(function(elem, pos, arr) {
+            return arr.indexOf(elem) === pos;
+          }).map(function(c) {
+            return encodeURIComponent(c);
+          }).join(',');
+        }
         /* -------------------------------------------------------------------------- */
 
         return {
@@ -261,7 +296,7 @@ function RtkHtb(configs) {
                  */
 
                 /* ----------- Fill this out to find a matching bid for the current parcel ------------- */
-                if (curReturnParcel.xSlotRef.someCriteria === bids[i].someCriteria) {
+                if (curReturnParcel.xSlotRef.sc === bids[i].id) {
                     curBid = bids[i];
                     bids.splice(i, 1);
                     break;
@@ -283,7 +318,7 @@ function RtkHtb(configs) {
              * these local variables */
 
             /* the bid price for the given slot */
-            var bidPrice = curBid.price;
+            var bidPrice = curBid.cpm;
 
             /* the size of the given slot */
             var bidSize = [Number(curBid.width), Number(curBid.height)];
@@ -303,7 +338,7 @@ function RtkHtb(configs) {
             * If firing a tracking pixel is not required or the pixel url is part of the adm,
             * leave empty;
             */
-            var pixelUrl = '';
+            var pixelUrl = curBid.npm || '';
 
             /* ---------------------------------------------------------------------------------------*/
 
@@ -415,9 +450,9 @@ function RtkHtb(configs) {
             },
             bidUnitInCents: 1, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
             lineItemType: Constants.LineItemTypes.ID_AND_SIZE,
-            callbackType: Partner.CallbackTypes.ID, // Callback type, please refer to the readme for details
+            callbackType: Partner.CallbackTypes.CALLBACK_NAME, // Callback type, please refer to the readme for details
             architecture: Partner.Architectures.SRA, // Request architecture, please refer to the readme for details
-            requestType: Partner.RequestTypes.ANY // Request type, jsonp, ajax, or any.
+            requestType: Partner.RequestTypes.JSONP // Request type, jsonp, ajax, or any.
         };
         /* ---------------------------------------------------------------------------------------*/
 

@@ -7,6 +7,9 @@ var mock = new MockBrowser();
 
 var libraryStubData = {
     'browser.js': {
+        getHostname: function () {
+            return 'www.indexexchange.com';
+        },
         getProtocol: function () {
             return 'http:';
         },
