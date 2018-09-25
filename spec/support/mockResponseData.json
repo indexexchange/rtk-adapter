@@ -1,4 +1,5 @@
 {
+
     "bid": [
       { "cpm": 1.0,  "id": "aaaa", "width": 300, "height": 600, "adm": "<html></html>", "nurl": "http://thor.rtk.io/nurl/aaaa" },
       { "cpm": 2.22, "id": "eeee", "width": 728, "height": 90,  "adm": "<html></html>", "nurl": "http://thor.rtk.io/nurl/eeee" },

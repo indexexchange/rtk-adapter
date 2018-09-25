@@ -197,7 +197,7 @@ describe('parseResponse', function () {
                  * The parcels have already been parsed and should contain all the
                  * necessary demand.
                  */
-
+                expect(returnParcels[i].price > 0).to.be.true;
                 expect(returnParcels[i]).to.exist;
             }
         });
@@ -288,7 +288,6 @@ describe('parseResponse', function () {
                  * The parcels have already been parsed and should contain all the
                  * necessary demand.
                  */
-
                 expect(returnParcels[i]).to.exist;
             }
         });

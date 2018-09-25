@@ -4,7 +4,7 @@
         "RTK_qqqq": {
             "ai": "QQQQ",
             "sc": "qqqq",
-            "host": "www.indexexchange.com",
+            "host": "bidder.rtk.io",
             "categories": ["cat1", "cat2"],
             "sizes": [
                 [300, 250]
@@ -13,16 +13,16 @@
         "RTK_aaaa": {
             "ai": "QQQQ",
             "sc": "aaaa",
-            "host": "www.indexexchange.com",
+            "host": "bidder.rtk.io",
             "categories": ["cat3"],
             "sizes": [
-                [300, 600]
+                [970, 250]
             ]
         },
         "RTK_eeee": {
             "ai": "QQQQ",
             "sc": "eeee",
-            "host": "www.indexexchange.com",
+            "host": "bidder.rtk.io",
             "categories": [],
             "sizes": [
                 [728, 90]
@@ -30,8 +30,7 @@
         }
     },
     "mapping": {
-        "htSlot1": ["RTK_qqqq"],
-        "htSlot2": ["RTK_aaaa"],
-        "htSlot3": ["RTK_eeee"]
+        "728x90_970x250": ["RTK_eeee", "RTK_aaaa"],
+        "300x250": ["RTK_qqqq"]
     }
 }
