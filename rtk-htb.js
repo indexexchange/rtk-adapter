@@ -318,7 +318,7 @@ function RtkHtb(configs) {
             headerStatsInfo[htSlotId] = {};
             headerStatsInfo[htSlotId][curReturnParcel.requestId] = [curReturnParcel.xSlotName];
 
-            var curBid;
+            var curBid = false;
 
             for (var i = 0; i < bids.length; i++) {
 
