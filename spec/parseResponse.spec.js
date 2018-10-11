@@ -63,7 +63,6 @@ function getExpectedAdEntry(mockData) {
 
     for(var i = 0; i < mockData.length; i++) {
         expectedAdEntry[i] = {};
-
         expectedAdEntry[i].price = mockData[i].cpm;
         expectedAdEntry[i].dealId = mockData[i].dealid;
     }

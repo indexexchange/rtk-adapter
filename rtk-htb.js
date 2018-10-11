@@ -372,7 +372,7 @@ function RtkHtb(configs) {
             * If firing a tracking pixel is not required or the pixel url is part of the adm,
             * leave empty;
             */
-            var pixelUrl = curBid.npm || '';
+            var pixelUrl = curBid.nurl || '';
 
             /* ---------------------------------------------------------------------------------------*/
 
@@ -483,7 +483,7 @@ function RtkHtb(configs) {
                 pm: 'ix_rtk_cpm',
                 pmid: 'ix_rtk_dealid'
             },
-            bidUnitInCents: 1, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
+            bidUnitInCents: 100, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
             lineItemType: Constants.LineItemTypes.ID_AND_SIZE,
             callbackType: Partner.CallbackTypes.CALLBACK_NAME, // Callback type, please refer to the readme for details
             architecture: Partner.Architectures.SRA, // Request architecture, please refer to the readme for details
