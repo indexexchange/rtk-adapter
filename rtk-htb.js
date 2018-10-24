@@ -203,8 +203,7 @@ function RtkHtb(configs) {
         var privacyEnabled = ComplianceService.isPrivacyEnabled();
 
         /* ---------------- Craft bid request using the above returnParcels --------- */
-        queryObj.jsonp = 'window.' + SpaceCamp.NAMESPACE + '.' + __profile.namespace +
-                '.adResponseCallbacks.' + callbackId;
+        queryObj.jsonp = false;
         queryObj.rtkreferer = Browser.getHostname();
         if (categories.length) {
           queryObj.categories = categories.filter(function(elem, pos, arr) {
@@ -485,9 +484,9 @@ function RtkHtb(configs) {
             },
             bidUnitInCents: 100, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
             lineItemType: Constants.LineItemTypes.ID_AND_SIZE,
-            callbackType: Partner.CallbackTypes.CALLBACK_NAME, // Callback type, please refer to the readme for details
+            callbackType: Partner.CallbackTypes.NONE, // Callback type, please refer to the readme for details
             architecture: Partner.Architectures.SRA, // Request architecture, please refer to the readme for details
-            requestType: Partner.RequestTypes.JSONP // Request type, jsonp, ajax, or any.
+            requestType: Partner.RequestTypes.AJAX // Request type, jsonp, ajax, or any.
         };
         /* ---------------------------------------------------------------------------------------*/
 
