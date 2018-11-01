@@ -63,8 +63,7 @@ function getExpectedAdEntry(mockData) {
 
     for(var i = 0; i < mockData.length; i++) {
         expectedAdEntry[i] = {};
-
-        expectedAdEntry[i].price = mockData[i].price;
+        expectedAdEntry[i].price = mockData[i].cpm;
         expectedAdEntry[i].dealId = mockData[i].dealid;
     }
 
@@ -197,7 +196,7 @@ describe('parseResponse', function () {
                  * The parcels have already been parsed and should contain all the
                  * necessary demand.
                  */
-
+                expect(returnParcels[i].price > 0).to.be.true;
                 expect(returnParcels[i]).to.exist;
             }
         });
@@ -288,7 +287,6 @@ describe('parseResponse', function () {
                  * The parcels have already been parsed and should contain all the
                  * necessary demand.
                  */
-
                 expect(returnParcels[i]).to.exist;
             }
         });
@@ -454,7 +452,7 @@ describe('parseResponse', function () {
 
             /* Get mock response data from our responseData file */
             responseData = JSON.parse(fs.readFileSync(path.join(__dirname, './support/mockResponseData.json')));
-            mockData = responseData.dealid;
+            mockData = responseData.deals;
         });
 
         afterEach(function () {

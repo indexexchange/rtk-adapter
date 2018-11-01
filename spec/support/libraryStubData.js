@@ -7,6 +7,9 @@ var mock = new MockBrowser();
 
 var libraryStubData = {
     'browser.js': {
+        getHostname: function () {
+            return 'www.indexexchange.com';
+        },
         getProtocol: function () {
             return 'http:';
         },
@@ -111,6 +114,19 @@ var libraryStubData = {
                 },
                 registerAd: function () {
                     return '_' + Math.random().toString(36).substr(2, 9);
+                }
+            },
+            ComplianceService: {
+                gdpr: {
+                    getConsent: function () {
+                        return {
+                            applies: true,
+                            consentString: "BOQ7WlgOQ7WlgABABwAAABJOACgACAAQABA"
+                        };
+                    }
+                },
+                isPrivacyEnabled: function () {
+                    return false;
                 }
             }
         },

@@ -1,27 +1,36 @@
 {
     "timeout": 1000,
     "xSlots": {
-        "1": {
-            "placementId": "54321",
+        "RTK_qqqq": {
+            "ai": "QQQQ",
+            "sc": "qqqq",
+            "host": "bidder.rtk.io",
+            "categories": ["cat1", "cat2"],
             "sizes": [
                 [300, 250]
             ]
         },
-        "2": {
-            "placementId": "12345",
+        "RTK_aaaa": {
+            "ai": "QQQQ",
+            "sc": "aaaa",
+            "host": "bidder.rtk.io",
+            "categories": ["cat3"],
             "sizes": [
-                [300, 600]
+                [970, 250]
             ]
         },
-        "3": {
-            "placementId": "654321",
+        "RTK_eeee": {
+            "ai": "QQQQ",
+            "sc": "eeee",
+            "host": "bidder.rtk.io",
+            "categories": [],
             "sizes": [
                 [728, 90]
             ]
         }
     },
     "mapping": {
-        "728x90_970x250": ["1", "2"],
-        "300x250": ["3"]
+        "728x90_970x250": ["RTK_eeee", "RTK_aaaa"],
+        "300x250": ["RTK_qqqq"]
     }
 }

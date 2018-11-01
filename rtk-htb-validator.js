@@ -43,16 +43,30 @@ var partnerValidator = function (configs) {
                     '*': {
                         type: 'object',
                         properties: {
-                            placementId: {
-                                type: 'string',
-                                minLength: 1
-                            }
+                          ai: {
+                            type: 'string',
+                            minLength: 4
+                          },
+                          sc: {
+                            type: 'string',
+                            minLength: 4
+                          },
+                          host: {
+                            type: 'string',
+                            optional: true,
+                            minLength: 5
+                          },
+                          categories: {
+                            type: 'array',
+                            optional: true
+                          }
                         }
                     }
                 }
             }
         }
     }, configs);
+
 
     if (!result.valid) {
         return result.format();

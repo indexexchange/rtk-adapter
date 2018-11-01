@@ -1,5 +1,18 @@
 {
-    "bid": [],
-    "pass": [],
-    "deals": []
+
+    "bid": [
+      { "cpm": 1.0,  "id": "aaaa", "width": 300, "height": 600, "adm": "<html></html>", "nurl": "http://thor.rtk.io/nurl/aaaa" },
+      { "cpm": 2.22, "id": "eeee", "width": 728, "height": 90,  "adm": "<html></html>", "nurl": "http://thor.rtk.io/nurl/eeee" },
+      { "cpm": 3.22, "id": "qqqq", "width": 300, "height": 250, "adm": "<html></html>", "nurl": "http://thor.rtk.io/nurl/qqqq" }
+    ],
+    "pass": [
+      { "cpm": 0, "id": "aaaa", "width": 300, "height": 600, "adm": false },
+      { "cpm": 0, "id": "eeee", "width": 728, "height": 90,  "adm": false },
+      { "cpm": 0, "dealid": "deal3", "id": "qqqq", "width": 300, "height": 250, "adm": false }
+    ],
+    "deals": [
+      { "cpm": 1, "dealid": "deal1", "id": "aaaa", "width": 300, "height": 600, "adm": "<html></html>" },
+      { "cpm": 3, "dealid": "deal2", "id": "eeee", "width": 728, "height": 90,  "adm": "<html></html>" },
+      { "cpm": 4, "dealid": "deal3", "id": "qqqq", "width": 300, "height": 250, "adm": "<html></html>" }
+    ]
 }

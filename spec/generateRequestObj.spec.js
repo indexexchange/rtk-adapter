@@ -121,6 +121,11 @@ describe('generateRequestObj', function () {
                 * request params, url, etc.
                 */
             expect(requestObject).to.exist;
+            expect(requestObject.url).to.equal("http://bidder.rtk.io/QQQQ/eeee_aaaa_qqqq/aardvark");
+            expect(requestObject.data.gdpr).to.equal("1");
+            expect(requestObject.data.consent).to.equal("BOQ7WlgOQ7WlgABABwAAABJOACgACAAQABA");
+            expect(requestObject.data.rtkreferer).to.equal("www.indexexchange.com");
+            expect(requestObject.data.jsonp.startsWith("window.headertag.RtkHtb.adResponseCallbacks")).to.be.true;
         });
         /* -----------------------------------------------------------------------*/
 

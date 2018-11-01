@@ -144,9 +144,36 @@ function RtkHtb(configs) {
         /* ---------------------- PUT CODE HERE ------------------------------------ */
         var queryObj = {};
         var callbackId = System.generateUniqueId();
+        var auctionCode = false,
+            shortCodesAry  = [],
+            host = false,
+            categories = [];
+
+        returnParcels.forEach(function(rp) {
+          var params = rp.xSlotRef;
+          if (params.host) {
+            host = params.host;
+          }
+          if (params.categories) {
+            categories = categories.concat(params.categories);
+          }
+          if (!auctionCode) {
+            auctionCode = params.ai;
+          }
+          if (shortCodesAry.indexOf(params.sc) == -1) {
+            shortCodesAry.push(params.sc);
+            rp.id = params.sc;
+            queryObj[params.sc] = rp.id;
+          }
+        });
+
+        if (!host) {
+          host = 'bidder.rtk.io';
+        }
 
         /* Change this to your bidder endpoint.*/
-        var baseUrl = Browser.getProtocol() + '//someAdapterEndpoint.com/bid';
+        var baseUrl = Browser.getProtocol() + '//' + host + '/' + auctionCode +
+                '/' + shortCodesAry.join('_') + '/aardvark';
 
         /* ------------------------ Get consent information -------------------------
          * If you want to implement GDPR consent in your adapter, use the function
@@ -166,7 +193,7 @@ function RtkHtb(configs) {
          *
          * You can also determine whether or not the publisher has enabled privacy
          * features in their wrapper by querying ComplianceService.isPrivacyEnabled().
-         * 
+         *
          * This function will return a boolean, which indicates whether the wrapper's
          * privacy features are on (true) or off (false). If they are off, the values
          * returned from gdpr.getConsent() are safe defaults and no attempt has been
@@ -176,8 +203,20 @@ function RtkHtb(configs) {
         var privacyEnabled = ComplianceService.isPrivacyEnabled();
 
         /* ---------------- Craft bid request using the above returnParcels --------- */
+        queryObj.jsonp = false;
+        queryObj.rtkreferer = Browser.getHostname();
+        if (categories.length) {
+          queryObj.categories = categories.filter(function(elem, pos, arr) {
+            return arr.indexOf(elem) === pos;
+          }).map(function(c) {
+            return encodeURIComponent(c);
+          }).join(',');
+        }
 
         /* ------- Put GDPR consent code here if you are implementing GDPR ---------- */
+
+        queryObj.gdpr = gdprStatus.applies ? '1' : '0';
+        queryObj.consent = encodeURIComponent(gdprStatus.consentString);
 
         /* -------------------------------------------------------------------------- */
 
@@ -278,7 +317,7 @@ function RtkHtb(configs) {
             headerStatsInfo[htSlotId] = {};
             headerStatsInfo[htSlotId][curReturnParcel.requestId] = [curReturnParcel.xSlotName];
 
-            var curBid;
+            var curBid = false;
 
             for (var i = 0; i < bids.length; i++) {
 
@@ -290,7 +329,7 @@ function RtkHtb(configs) {
                  */
 
                 /* ----------- Fill this out to find a matching bid for the current parcel ------------- */
-                if (curReturnParcel.xSlotRef.someCriteria === bids[i].someCriteria) {
+                if (curReturnParcel.xSlotRef.sc === bids[i].id) {
                     curBid = bids[i];
                     bids.splice(i, 1);
                     break;
@@ -312,7 +351,7 @@ function RtkHtb(configs) {
              * these local variables */
 
             /* the bid price for the given slot */
-            var bidPrice = curBid.price;
+            var bidPrice = curBid.cpm;
 
             /* the size of the given slot */
             var bidSize = [Number(curBid.width), Number(curBid.height)];
@@ -332,7 +371,7 @@ function RtkHtb(configs) {
             * If firing a tracking pixel is not required or the pixel url is part of the adm,
             * leave empty;
             */
-            var pixelUrl = '';
+            var pixelUrl = curBid.nurl || '';
 
             /* ---------------------------------------------------------------------------------------*/
 
@@ -443,11 +482,11 @@ function RtkHtb(configs) {
                 pm: 'ix_rtk_cpm',
                 pmid: 'ix_rtk_dealid'
             },
-            bidUnitInCents: 1, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
+            bidUnitInCents: 100, // The bid price unit (in cents) the endpoint returns, please refer to the readme for details
             lineItemType: Constants.LineItemTypes.ID_AND_SIZE,
-            callbackType: Partner.CallbackTypes.ID, // Callback type, please refer to the readme for details
+            callbackType: Partner.CallbackTypes.NONE, // Callback type, please refer to the readme for details
             architecture: Partner.Architectures.SRA, // Request architecture, please refer to the readme for details
-            requestType: Partner.RequestTypes.ANY // Request type, jsonp, ajax, or any.
+            requestType: Partner.RequestTypes.AJAX // Request type, jsonp, ajax, or any.
         };
         /* ---------------------------------------------------------------------------------------*/
 
